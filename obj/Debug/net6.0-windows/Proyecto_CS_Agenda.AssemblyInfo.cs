@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Proyecto_CS_Agenda")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c227ca56dd85eee006b63074737a335259bdaa13")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bd9faa5e44f1c3181153967119f10377c4d55c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Proyecto_CS_Agenda")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Proyecto_CS_Agenda")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

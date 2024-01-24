@@ -52,3 +52,4 @@ C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\System.Management.dll
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.Views.LoginView.resources
+C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.Views.AdminView.resources

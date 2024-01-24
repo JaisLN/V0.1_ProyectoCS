@@ -108,7 +108,7 @@
             Controls.Add(txtbUser);
             Controls.Add(btnLogin);
             Name = "LoginView";
-            Text = "LoginView";
+            Text = "Login";
             ResumeLayout(false);
         }
 

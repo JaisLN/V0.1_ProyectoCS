@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.Logging;
 using Proyecto_CS_Agenda.Controllers;
 using Proyecto_CS_Agenda.Models;
 using Proyecto_CS_Agenda.Services;
@@ -15,27 +16,10 @@ namespace Proyecto_CS_Agenda
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginView());
 
-
-           
-              
-
-                /*nuevoUsuarioCtrl.AgregarUsuario(new Usuario
-                {
-                    Id = "1",
-                    Username = "admin",
-                    Password = hashingService.HashPassword("admin"),
-                    Cedula = "1234567890",
-                    Nombres = "Juan",
-                    Apellidos = "Root",
-                    SystemRolId = "1",
-                    ContactId = "1"
-                });*/
-
-
-      
 
         }
 

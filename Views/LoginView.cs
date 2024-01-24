@@ -41,13 +41,23 @@ namespace Proyecto_CS_Agenda.Views
 
                         string validateRolSys = _loginServices.ValidarRolUsuario(validate.Id);
 
-                        if (validateRolSys != null)
+                        if (validateRolSys == "Admin")
+                        {
+                            AdminView form = new AdminView();
+                            this.Hide();
+                            form.Show();
+                            MessageBox.Show($"Bienvenido {validateRolSys}, {validate.Nombres} {validate.Apellidos}");
+                        }
+
+                        else if (validateRolSys == "Usuario")
                         {
                             MessageBox.Show($"Bienvenido {validateRolSys}, {validate.Nombres} {validate.Apellidos}");
                         }
+
+
                         else
                         {
-                            MessageBox.Show("Error al obtener el rol del usuario.");
+                            MessageBox.Show($"Valor inesperado de validateRolSys: {validateRolSys}");
                         }
                     }
                     else
