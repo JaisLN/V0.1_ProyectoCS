@@ -7,6 +7,9 @@ using Proyecto_CS_Agenda.Models;
 
 namespace Proyecto_CS_Agenda.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AgendumController
     {
         private readonly p1ConstSoftContext _context;
@@ -16,7 +19,7 @@ namespace Proyecto_CS_Agenda.Controllers
             _context = context;
         }
 
-        // Obtener todas las agendas
+        /// Obtener todas las agendas
         public List<Agendum> ObtenerTodasAgendas()
         {
             return _context.Agenda.ToList();

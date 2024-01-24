@@ -1,6 +1,7 @@
 using Proyecto_CS_Agenda.Controllers;
 using Proyecto_CS_Agenda.Models;
 using Proyecto_CS_Agenda.Services;
+using Proyecto_CS_Agenda.Views;
 
 namespace Proyecto_CS_Agenda
 {
@@ -14,45 +15,14 @@ namespace Proyecto_CS_Agenda
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            /*ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());*/
+            ApplicationConfiguration.Initialize();
+            Application.Run(new LoginView());
 
 
-            // Crear instancia de contexto de base de datos
-            using (var dbContext = new p1ConstSoftContext())
-            {
-                var hashingService = new HashingManagerService();
-                var nuevoRolContactoCtrl = new RolContactoController(dbContext);
-                var nuevoUsuarioCtrl = new UsuarioController(dbContext);
-                var nuevoContactoCtrl = new ContactoController(dbContext);
+           
+              
 
-
-
-
-                /* nuevoRolContactoCtrl.AgregarRolContacto(new RolContacto
-                 {
-                     Id = "1",
-                     Nombre = "Empleado",
-                     Descripcion = "Emrpresa",
-                     Estado = "Activo"
-
-                 }) ;*/
-
-
-                /*nuevoContactoCtrl.AgregarContacto(new Contacto 
-                {
-
-                    Id = "1",
-                    NombreContact = "Administrador Juan",
-                    Mail = "admin@mail.com",
-                    Telf1 = "123456789",
-                    Telf2 = "987654321",
-                    Direccion = "Calle Principal",
-                    RolId = "1"
-
-                });*/
-
-                nuevoUsuarioCtrl.AgregarUsuario(new Usuario
+                /*nuevoUsuarioCtrl.AgregarUsuario(new Usuario
                 {
                     Id = "1",
                     Username = "admin",
@@ -62,14 +32,10 @@ namespace Proyecto_CS_Agenda
                     Apellidos = "Root",
                     SystemRolId = "1",
                     ContactId = "1"
-                });
+                });*/
 
 
-                dbContext.SaveChanges();
-
-
-          
-            }
+      
 
         }
 

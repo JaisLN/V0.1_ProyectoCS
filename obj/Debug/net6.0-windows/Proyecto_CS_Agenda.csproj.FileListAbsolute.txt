@@ -48,4 +48,7 @@ C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\ref\Proyecto_CS_Agenda.dll
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.sourcelink.json
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\BCrypt.Net-Next.dll
-C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.LoginForm.resources
+C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\Guna.UI2.dll
+C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\System.Management.dll
+C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Management.dll
+C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.Views.LoginView.resources
