@@ -15,33 +15,51 @@ namespace Proyecto_CS_Agenda.Views
 {
     public partial class LoginView : Form
     {
+        
         public LoginView()
         {
             InitializeComponent();
-            btnLogin.Click += btnLogin_Click;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtbUser.Text;
-            string password = txtbPassw.Text;
-
-            var usuarioController = new UsuarioController(new p1ConstSoftContext());
+            var usuarioCtrl = new UsuarioController(new p1ConstSoftContext());
+            var rolSistemaCtrl = new RolSistemaController(new p1ConstSoftContext());
             var hashingService = new HashingManagerService();
-
-            var usuario = usuarioController.ObtenerTodosUsuarios().FirstOrDefault(u => u.Username == username);
-
-            if (usuario != null && hashingService.VerifyPassword(password, usuario.Password))
+            var _loginServices = new LoginServices(usuarioCtrl, rolSistemaCtrl,hashingService);
             {
-                // Las credenciales son válidas, puedes realizar acciones adicionales aquí
-                MessageBox.Show("Inicio de sesión exitoso");
-            }
-            else
-            {
-                // Credenciales inválidas, puedes mostrar un mensaje de error o realizar otras acciones
-                MessageBox.Show("Inicio de sesión fallido. Verifica tu nombre de usuario y contraseña.");
-            }
+                try
+                {
+                    string username = txtbUser.Text;
+                    string password = txtbPassw.Text;
 
+                    var validate = _loginServices.ValidarCredenciales(username, password);
+
+                    if (validate != null)
+                    {
+                        MessageBox.Show("Inicio de sesión exitoso");
+
+                        string validateRolSys = _loginServices.ValidarRolUsuario(validate.Id);
+
+                        if (validateRolSys != null)
+                        {
+                            MessageBox.Show($"Bienvenido {validateRolSys}, {validate.Nombres} {validate.Apellidos}");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al obtener el rol del usuario.");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Inicio de sesión fallido. Verifica tu nombre de usuario y contraseña.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
         }
     }
 }
