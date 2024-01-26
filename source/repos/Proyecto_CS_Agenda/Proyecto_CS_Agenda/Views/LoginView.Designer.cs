@@ -34,9 +34,12 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             btnLogin = new Guna.UI2.WinForms.Guna2Button();
             txtbUser = new Guna.UI2.WinForms.Guna2TextBox();
             txtbPassw = new Guna.UI2.WinForms.Guna2TextBox();
+            guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             SuspendLayout();
             // 
             // btnLogin
@@ -99,14 +102,28 @@
             txtbPassw.TextAlign = HorizontalAlignment.Center;
             txtbPassw.UseSystemPasswordChar = true;
             // 
+            // guna2Panel1
+            // 
+            guna2Panel1.BackColor = SystemColors.ControlDark;
+            guna2Panel1.BorderColor = Color.Black;
+            guna2Panel1.BorderThickness = 2;
+            guna2Panel1.CustomizableEdges = customizableEdges7;
+            guna2Panel1.Location = new Point(0, 1);
+            guna2Panel1.Name = "guna2Panel1";
+            guna2Panel1.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            guna2Panel1.Size = new Size(229, 448);
+            guna2Panel1.TabIndex = 3;
+            // 
             // LoginView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(guna2Panel1);
             Controls.Add(txtbPassw);
             Controls.Add(txtbUser);
             Controls.Add(btnLogin);
+            MinimizeBox = false;
             Name = "LoginView";
             Text = "Login";
             ResumeLayout(false);
@@ -117,5 +134,6 @@
         private Guna.UI2.WinForms.Guna2Button btnLogin;
         private Guna.UI2.WinForms.Guna2TextBox txtbUser;
         private Guna.UI2.WinForms.Guna2TextBox txtbPassw;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
     }
 }

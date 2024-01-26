@@ -46,7 +46,7 @@ namespace Proyecto_CS_Agenda.Views
             var _rolContactoCtrl = new RolContactoController(new ConstSoft_agendaContext());
             try
             {
-                string nombreRol = txtbContactRolName.Text;
+                string nombreRol = txtbContactRolName.Text.Trim();
                 string descripcionRol = txtbContactRolDesc.Text;
                 string estadoRol = cbContactRolState.SelectedItem?.ToString();
 

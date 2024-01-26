@@ -40,8 +40,6 @@ namespace Proyecto_CS_Agenda.Views
                     var validate = _loginServices.ValidarCredenciales(_txusername, _txpassword);
                     if (validate != null)
                     {
-                        MessageBox.Show("Inicio de sesión exitoso");
-
                         int validateRolSys = _loginServices.ValidarRolUsuario(validate.Id);
 
                         if (validateRolSys == 1000)
@@ -49,7 +47,7 @@ namespace Proyecto_CS_Agenda.Views
                             AdminView form = new AdminView();
                             this.Hide();
                             form.Show();
-                            MessageBox.Show($"Bienvenido {validateRolSys}, {validate.Nombres} {validate.Apellidos}");
+                            MessageBox.Show($"Bienvenido {validateRolSys}, {validate.Nombres.Trim()} {validate.Apellidos.Trim()}");
                         }
 
                         else if (validateRolSys == 1001)

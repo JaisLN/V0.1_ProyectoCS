@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             btnSave = new Guna.UI2.WinForms.Guna2Button();
             btnCancel = new Guna.UI2.WinForms.Guna2Button();
             txtRolName = new Guna.UI2.WinForms.Guna2TextBox();
@@ -52,7 +52,7 @@
             // btnSave
             // 
             btnSave.BorderRadius = 3;
-            btnSave.CustomizableEdges = customizableEdges9;
+            btnSave.CustomizableEdges = customizableEdges1;
             btnSave.DisabledState.BorderColor = Color.DarkGray;
             btnSave.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSave.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -61,7 +61,7 @@
             btnSave.ForeColor = Color.White;
             btnSave.Location = new Point(280, 344);
             btnSave.Name = "btnSave";
-            btnSave.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnSave.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnSave.Size = new Size(98, 38);
             btnSave.TabIndex = 0;
             btnSave.Text = "Guardar";
@@ -70,7 +70,7 @@
             // btnCancel
             // 
             btnCancel.BorderRadius = 3;
-            btnCancel.CustomizableEdges = customizableEdges11;
+            btnCancel.CustomizableEdges = customizableEdges3;
             btnCancel.DisabledState.BorderColor = Color.DarkGray;
             btnCancel.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCancel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -80,14 +80,15 @@
             btnCancel.ForeColor = Color.White;
             btnCancel.Location = new Point(410, 344);
             btnCancel.Name = "btnCancel";
-            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnCancel.Size = new Size(98, 38);
             btnCancel.TabIndex = 1;
             btnCancel.Text = "Cancelar";
+            btnCancel.Click += btnCancel_Click;
             // 
             // txtRolName
             // 
-            txtRolName.CustomizableEdges = customizableEdges13;
+            txtRolName.CustomizableEdges = customizableEdges5;
             txtRolName.DefaultText = "";
             txtRolName.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtRolName.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -101,14 +102,14 @@
             txtRolName.PasswordChar = '\0';
             txtRolName.PlaceholderText = "Nombre";
             txtRolName.SelectedText = "";
-            txtRolName.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txtRolName.ShadowDecoration.CustomizableEdges = customizableEdges6;
             txtRolName.Size = new Size(315, 41);
             txtRolName.TabIndex = 2;
             // 
             // cbRolState
             // 
             cbRolState.BackColor = Color.Transparent;
-            cbRolState.CustomizableEdges = customizableEdges15;
+            cbRolState.CustomizableEdges = customizableEdges7;
             cbRolState.DrawMode = DrawMode.OwnerDrawFixed;
             cbRolState.DropDownStyle = ComboBoxStyle.DropDownList;
             cbRolState.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -117,9 +118,9 @@
             cbRolState.ForeColor = Color.FromArgb(68, 88, 112);
             cbRolState.ItemHeight = 30;
             cbRolState.Items.AddRange(new object[] { "Activo", "Inactivo" });
-            cbRolState.Location = new Point(428, 265);
+            cbRolState.Location = new Point(428, 254);
             cbRolState.Name = "cbRolState";
-            cbRolState.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            cbRolState.ShadowDecoration.CustomizableEdges = customizableEdges8;
             cbRolState.Size = new Size(314, 36);
             cbRolState.TabIndex = 5;
             // 
@@ -136,7 +137,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(428, 242);
+            label2.Location = new Point(428, 231);
             label2.Name = "label2";
             label2.Size = new Size(54, 20);
             label2.TabIndex = 7;

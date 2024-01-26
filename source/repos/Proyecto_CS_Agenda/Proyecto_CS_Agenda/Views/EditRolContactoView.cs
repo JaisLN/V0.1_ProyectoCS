@@ -22,9 +22,9 @@ namespace Proyecto_CS_Agenda.Views
             txtRolName.Text = rol.Nombre;
             txtRolDesc.Text = rol.Descripcion;
             lbRolID.Text = rol.Id.ToString();
- 
 
-            if(rol.Estado == "Activo")
+
+            if (rol.Estado == "Activo")
             {
                 cbRolState.SelectedIndex = 0;
             }
@@ -55,7 +55,52 @@ namespace Proyecto_CS_Agenda.Views
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("holaaaa");
+            try
+            {
+                string newName = txtRolName.Text.Trim();
+                string newDesc = txtRolDesc.Text;
+                string newState = cbRolState.SelectedItem?.ToString();
+
+                // Obtener el ID del rol
+                if (int.TryParse(lbRolID.Text, out int roleId))
+                {
+                    // Obtener el objeto RolContacto actual
+                    var rolContactoCtrl = new RolContactoController(new ConstSoft_agendaContext());
+                    var rolContactoActual = rolContactoCtrl.ObtenerRolContactoPorId(roleId);
+
+                    // Verificar si se encontró el rol
+                    if (rolContactoActual != null)
+                    {
+                        rolContactoActual.Nombre = newName;
+                        rolContactoActual.Descripcion = newDesc;
+                        rolContactoActual.Estado = newState;
+
+                        rolContactoCtrl.EditarRolContacto(roleId, rolContactoActual);
+
+                        MessageBox.Show("Cambios guardados exitosamente");
+                        DialogResult = DialogResult.OK;
+                        Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo encontrar el rol correspondiente");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error al obtener el ID del rol");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar los cambios: {ex.Message}");
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

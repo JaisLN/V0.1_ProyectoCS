@@ -28,18 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tabctrlAdmin = new Guna.UI2.WinForms.Guna2TabControl();
             tPageGestionRol = new TabPage();
+            label3 = new Label();
+            txtbContactRolDesc = new RichTextBox();
             btnDeleteRol = new Guna.UI2.WinForms.Guna2Button();
             btnEditRol = new Guna.UI2.WinForms.Guna2Button();
             btnAddRol = new Guna.UI2.WinForms.Guna2Button();
@@ -49,8 +51,6 @@
             dgvListSystemRol = new DataGridView();
             label1 = new Label();
             tPageGestionEmpleados = new TabPage();
-            txtbContactRolDesc = new RichTextBox();
-            label3 = new Label();
             tabctrlAdmin.SuspendLayout();
             tPageGestionRol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvListSystemRol).BeginInit();
@@ -105,10 +105,27 @@
             tPageGestionRol.Text = "Gestion de Roles";
             tPageGestionRol.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(609, 166);
+            label3.Name = "label3";
+            label3.Size = new Size(81, 20);
+            label3.TabIndex = 11;
+            label3.Text = "Decripcion";
+            // 
+            // txtbContactRolDesc
+            // 
+            txtbContactRolDesc.Location = new Point(609, 189);
+            txtbContactRolDesc.Name = "txtbContactRolDesc";
+            txtbContactRolDesc.Size = new Size(298, 100);
+            txtbContactRolDesc.TabIndex = 10;
+            txtbContactRolDesc.Text = "";
+            // 
             // btnDeleteRol
             // 
             btnDeleteRol.BorderRadius = 3;
-            btnDeleteRol.CustomizableEdges = customizableEdges11;
+            btnDeleteRol.CustomizableEdges = customizableEdges1;
             btnDeleteRol.DisabledState.BorderColor = Color.DarkGray;
             btnDeleteRol.DisabledState.CustomBorderColor = Color.DarkGray;
             btnDeleteRol.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -118,7 +135,7 @@
             btnDeleteRol.ForeColor = Color.White;
             btnDeleteRol.Location = new Point(156, 421);
             btnDeleteRol.Name = "btnDeleteRol";
-            btnDeleteRol.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            btnDeleteRol.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnDeleteRol.Size = new Size(98, 38);
             btnDeleteRol.TabIndex = 8;
             btnDeleteRol.Text = "Eliminar";
@@ -127,7 +144,7 @@
             // btnEditRol
             // 
             btnEditRol.BorderRadius = 3;
-            btnEditRol.CustomizableEdges = customizableEdges13;
+            btnEditRol.CustomizableEdges = customizableEdges3;
             btnEditRol.DisabledState.BorderColor = Color.DarkGray;
             btnEditRol.DisabledState.CustomBorderColor = Color.DarkGray;
             btnEditRol.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -136,7 +153,7 @@
             btnEditRol.ForeColor = Color.White;
             btnEditRol.Location = new Point(25, 421);
             btnEditRol.Name = "btnEditRol";
-            btnEditRol.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            btnEditRol.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnEditRol.Size = new Size(98, 38);
             btnEditRol.TabIndex = 7;
             btnEditRol.Text = "Editar";
@@ -145,7 +162,7 @@
             // btnAddRol
             // 
             btnAddRol.BorderRadius = 3;
-            btnAddRol.CustomizableEdges = customizableEdges15;
+            btnAddRol.CustomizableEdges = customizableEdges5;
             btnAddRol.DisabledState.BorderColor = Color.DarkGray;
             btnAddRol.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAddRol.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -154,7 +171,7 @@
             btnAddRol.ForeColor = Color.White;
             btnAddRol.Location = new Point(708, 401);
             btnAddRol.Name = "btnAddRol";
-            btnAddRol.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            btnAddRol.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnAddRol.Size = new Size(98, 38);
             btnAddRol.TabIndex = 6;
             btnAddRol.Text = "Agregar";
@@ -163,7 +180,7 @@
             // cbContactRolState
             // 
             cbContactRolState.BackColor = Color.Transparent;
-            cbContactRolState.CustomizableEdges = customizableEdges17;
+            cbContactRolState.CustomizableEdges = customizableEdges7;
             cbContactRolState.DrawMode = DrawMode.OwnerDrawFixed;
             cbContactRolState.DropDownStyle = ComboBoxStyle.DropDownList;
             cbContactRolState.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -172,16 +189,16 @@
             cbContactRolState.ForeColor = Color.FromArgb(68, 88, 112);
             cbContactRolState.ItemHeight = 30;
             cbContactRolState.Items.AddRange(new object[] { "Activo", "Inactivo" });
-            cbContactRolState.Location = new Point(600, 331);
+            cbContactRolState.Location = new Point(609, 333);
             cbContactRolState.Name = "cbContactRolState";
-            cbContactRolState.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            cbContactRolState.ShadowDecoration.CustomizableEdges = customizableEdges8;
             cbContactRolState.Size = new Size(298, 36);
             cbContactRolState.TabIndex = 5;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(604, 308);
+            label2.Location = new Point(613, 310);
             label2.Name = "label2";
             label2.Size = new Size(54, 20);
             label2.TabIndex = 4;
@@ -189,7 +206,7 @@
             // 
             // txtbContactRolName
             // 
-            txtbContactRolName.CustomizableEdges = customizableEdges19;
+            txtbContactRolName.CustomizableEdges = customizableEdges9;
             txtbContactRolName.DefaultText = "";
             txtbContactRolName.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtbContactRolName.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -203,7 +220,7 @@
             txtbContactRolName.PasswordChar = '\0';
             txtbContactRolName.PlaceholderText = "Nombre";
             txtbContactRolName.SelectedText = "";
-            txtbContactRolName.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            txtbContactRolName.ShadowDecoration.CustomizableEdges = customizableEdges10;
             txtbContactRolName.Size = new Size(298, 39);
             txtbContactRolName.TabIndex = 2;
             // 
@@ -236,23 +253,6 @@
             tPageGestionEmpleados.TabIndex = 1;
             tPageGestionEmpleados.Text = "Gestion de Empleados";
             tPageGestionEmpleados.UseVisualStyleBackColor = true;
-            // 
-            // txtbContactRolDesc
-            // 
-            txtbContactRolDesc.Location = new Point(609, 189);
-            txtbContactRolDesc.Name = "txtbContactRolDesc";
-            txtbContactRolDesc.Size = new Size(298, 100);
-            txtbContactRolDesc.TabIndex = 10;
-            txtbContactRolDesc.Text = "";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(609, 166);
-            label3.Name = "label3";
-            label3.Size = new Size(81, 20);
-            label3.TabIndex = 11;
-            label3.Text = "Decripcion";
             // 
             // AdminView
             // 
