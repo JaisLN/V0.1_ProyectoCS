@@ -87,5 +87,10 @@ namespace Proyecto_CS_Agenda.Controllers
                 Console.WriteLine($"Error al editar el rol: {ex.Message}");
             }
         }
+
+        public RolSistema ObtenerRolSysPorNombre(string name)
+        {
+            return _context.RolSistemas.FirstOrDefault(u => u.Name == name);
+        }
     }
 }

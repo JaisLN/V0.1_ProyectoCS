@@ -197,7 +197,7 @@
             Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Name = "EditRolContactoView";
-            Text = "Form1";
+            Text = "Editar Rol Contacto";
             ((System.ComponentModel.ISupportInitialize)dgvLinkedContacts).EndInit();
             ResumeLayout(false);
             PerformLayout();

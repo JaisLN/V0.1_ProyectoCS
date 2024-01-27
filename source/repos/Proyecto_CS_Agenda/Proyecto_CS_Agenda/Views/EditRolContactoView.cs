@@ -18,7 +18,7 @@ namespace Proyecto_CS_Agenda.Views
         public EditRolContactoView(RolContacto _Rol)
         {
             InitializeComponent();
-            var rol = _Rol;
+            RolContacto rol = _Rol;
             txtRolName.Text = rol.Nombre;
             txtRolDesc.Text = rol.Descripcion;
             lbRolID.Text = rol.Id.ToString();

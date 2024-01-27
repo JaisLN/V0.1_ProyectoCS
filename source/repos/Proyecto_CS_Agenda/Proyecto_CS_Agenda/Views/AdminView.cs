@@ -31,7 +31,7 @@ namespace Proyecto_CS_Agenda.Views
 
 
 
-        //tabGestionRol
+        //tabGestionRol********************************************************************************************************************
         private void CargarDatosDataGridViewtab1()
         {
             var _rolContactoCtrl = new RolContactoController(new ConstSoft_agendaContext());
@@ -135,7 +135,7 @@ namespace Proyecto_CS_Agenda.Views
 
 
 
-        //tabGestionEmpleados(usuarios no administradores con acceso al sistema)
+        //tabGestionEmpleados(usuarios no administradores con acceso al sistema)*************************************************************
         public void cargarDatosDGVtab2()
         {
             var _rolUsersCtrl = new UsuarioController(new ConstSoft_agendaContext());
@@ -161,7 +161,7 @@ namespace Proyecto_CS_Agenda.Views
             }
         }
 
-
+        //para precargar la lista de roles de contacto al controlador especificado
         public void cargarRolesCotacto()
         {
             var _RolesContacto = new RolContactoController(new ConstSoft_agendaContext());
@@ -176,8 +176,7 @@ namespace Proyecto_CS_Agenda.Views
             }
         }
 
-
-        public Contacto CrearContactoParaVincular() 
+        public Contacto CrearContactoParaVincular()
         {
             var _rolContacto = new RolContactoController(new ConstSoft_agendaContext());
             var _ContactCtrl = new ContactoController(new ConstSoft_agendaContext());
@@ -232,7 +231,7 @@ namespace Proyecto_CS_Agenda.Views
 
             try
             {
-             
+
                 int valorSeleccionado = 0;
                 if (rbAdminS.Checked) { valorSeleccionado = 1000; }
                 else if (rbUserS.Checked) { valorSeleccionado = 1001; }
@@ -246,25 +245,25 @@ namespace Proyecto_CS_Agenda.Views
                 Contacto _contactohandler = CrearContactoParaVincular();
 
 
-                    // Crear un usuario vinculando el Contacto previamente creado
-                    Usuario nuevoUser = new Usuario
-                    {
-                        Cedula = cedula,
-                        Nombres = nombres,
-                        Apellidos = apellidos,
-                        Username = username,
-                        Password = _hashing.HashPassword(password),
-                        SystemRol = valorSeleccionado,
-                        ContactId = _contactohandler.Id
-                    };
+                // Crear un usuario vinculando el Contacto previamente creado
+                Usuario nuevoUser = new Usuario
+                {
+                    Cedula = cedula,
+                    Nombres = nombres,
+                    Apellidos = apellidos,
+                    Username = username,
+                    Password = _hashing.HashPassword(password),
+                    SystemRol = valorSeleccionado,
+                    ContactId = _contactohandler.Id
+                };
 
-                    _UserCtrl.AgregarUsuario(nuevoUser);
-                    cargarDatosDGVtab2();
+                _UserCtrl.AgregarUsuario(nuevoUser);
+                cargarDatosDGVtab2();
 
-                    MessageBox.Show("Empleado Usuario agregado exitosamente.\n" +
-                                    $"Vinculado el contacto {_contactohandler.Id} al usuario: \n" +
-                                    $"{nuevoUser.Nombres} {nuevoUser.Apellidos}");
-                
+                MessageBox.Show("Empleado Usuario agregado exitosamente.\n" +
+                                $"Vinculado el contacto {_contactohandler.Id} al usuario: \n" +
+                                $"{nuevoUser.Nombres} {nuevoUser.Apellidos}");
+
 
             }
             catch (Exception ex)
@@ -274,5 +273,85 @@ namespace Proyecto_CS_Agenda.Views
         }
 
 
+        //validacion de los textbox ***********************************
+        private void _txtCedula_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void _txtNombres_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void _txtApellidos_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar) && e.KeyChar != (char)Keys.Back && e.KeyChar != ' ')
+            {
+                e.Handled = true;
+            }
+        }
+
+
+        //Eliminar un Usuario
+        private void btnTab2Delete_Click(object sender, EventArgs e)
+        {
+            var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
+            if (dgvSystemUsers.SelectedRows.Count > 0)
+            {
+                // Obtener el valor de la celda correspondiente al Id 
+                int idToDelete = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["Id"].Value);
+
+                _UserCtrl.EliminarUsuario(idToDelete);
+                cargarDatosDGVtab2();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un usuario antes de hacer clic en 'Eliminar'.");
+            }
+        }
+
+        private void AbrirVentanaEditUsuario(Usuario us)
+        {
+
+            EditUsuarioView formEdicionUs = new EditUsuarioView(us);
+            DialogResult result = formEdicionUs.ShowDialog();
+
+
+            if (result == DialogResult.OK)
+            {
+                cargarDatosDGVtab2();
+            }
+        }
+
+
+        //ir a la venata para Editar Usuario Seleccionado
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
+
+            
+            if (dgvSystemUsers.SelectedRows.Count > 0)
+            {
+                int IdSelected = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["Id"].Value);
+                Usuario UserSelected = _UserCtrl.ObtenerUsuarioPorId(IdSelected);
+
+                // Verificar si se obtuvo el objeto correctamente
+                if (UserSelected != null)
+                {
+                    AbrirVentanaEditUsuario(UserSelected);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un rol antes de hacer clic en 'Editar'.");
+            }
+        }
     }
 }
