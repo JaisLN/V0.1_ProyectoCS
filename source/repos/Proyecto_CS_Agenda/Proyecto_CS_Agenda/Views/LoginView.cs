@@ -47,7 +47,7 @@ namespace Proyecto_CS_Agenda.Views
                             AdminView form = new AdminView();
                             this.Hide();
                             form.Show();
-                            MessageBox.Show($"Bienvenido {validateRolSys}, {validate.Nombres.Trim()} {validate.Apellidos.Trim()}");
+                            MessageBox.Show($"Bienvenido {validate.Nombres.Trim()} {validate.Apellidos.Trim()}");
                         }
 
                         else if (validateRolSys == 1001)

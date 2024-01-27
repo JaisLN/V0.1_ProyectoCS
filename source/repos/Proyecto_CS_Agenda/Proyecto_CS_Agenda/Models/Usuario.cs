@@ -24,3 +24,5 @@ namespace Proyecto_CS_Agenda.Models
         public virtual ICollection<Agendum> Agenda { get; set; }
     }
 }
+
+

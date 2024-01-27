@@ -54,3 +54,4 @@ C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.csproj.GenerateResource.cache
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.Views.EditRolContactoView.resources
 C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.sourcelink.json
+C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\obj\Debug\net6.0-windows\Proyecto_CS_Agenda.Properties.Resources.resources

@@ -24,7 +24,7 @@ namespace Proyecto_CS_Agenda.Views
             lbRolID.Text = rol.Id.ToString();
 
 
-            if (rol.Estado == "Activo")
+            if (rol.Estado.Trim() == "Activo")
             {
                 cbRolState.SelectedIndex = 0;
             }

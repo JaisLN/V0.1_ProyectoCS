@@ -96,6 +96,7 @@
             txtRolName.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtRolName.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtRolName.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            txtRolName.ForeColor = Color.Black;
             txtRolName.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
             txtRolName.Location = new Point(40, 122);
             txtRolName.Name = "txtRolName";

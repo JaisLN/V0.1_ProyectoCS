@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Proyecto_CS_Agenda</id>
+    <version>1.0.0</version>
+    <authors>Proyecto_CS_Agenda</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="ff4e865d490206c36a3bbc2ede6f634c95fd2c83" />
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="BCrypt.Net-Next" version="4.0.3" exclude="Build,Analyzers" />
+        <dependency id="Guna.UI2.WinForms" version="2.0.4.6" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore" version="6.0.14" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.14" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\Proyecto_CS_Agenda.runtimeconfig.json" target="lib\net6.0-windows7.0\Proyecto_CS_Agenda.runtimeconfig.json" />
+    <file src="C:\Users\javi\source\repos\Proyecto_CS_Agenda\Proyecto_CS_Agenda\bin\Debug\net6.0-windows\Proyecto_CS_Agenda.dll" target="lib\net6.0-windows7.0\Proyecto_CS_Agenda.dll" />
+  </files>
+</package>

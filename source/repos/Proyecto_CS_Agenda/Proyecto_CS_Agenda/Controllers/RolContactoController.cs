@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_CS_Agenda.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Proyecto_CS_Agenda.Controllers
 {
@@ -103,6 +104,13 @@ namespace Proyecto_CS_Agenda.Controllers
                 Console.WriteLine($"Error al obtener contactos vinculados: {ex.Message}");
                 return new List<Contacto>();
             }
+        }
+
+
+        //obtener rolcontacto via nombre
+        public RolContacto ObtenerRolContactporName(string name)
+        {
+            return _context.RolContactos.FirstOrDefault(u => u.Nombre == name);
         }
     }
 }

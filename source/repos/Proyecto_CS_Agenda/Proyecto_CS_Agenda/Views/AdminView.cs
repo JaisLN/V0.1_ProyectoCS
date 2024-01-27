@@ -1,5 +1,6 @@
 ﻿using Proyecto_CS_Agenda.Controllers;
 using Proyecto_CS_Agenda.Models;
+using Proyecto_CS_Agenda.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Proyecto_CS_Agenda.Views
 {
     public partial class AdminView : Form
@@ -17,10 +19,20 @@ namespace Proyecto_CS_Agenda.Views
         public AdminView()
         {
             InitializeComponent();
-            CargarDatosDataGridView();
+
+            //tabGestionRol
+            CargarDatosDataGridViewtab1();
+
+            //tabGestionEmpleados(usuarios del sistema)
+            cargarDatosDGVtab2();
+            cargarRolesCotacto();
+
         }
 
-        private void CargarDatosDataGridView()
+
+
+        //tabGestionRol
+        private void CargarDatosDataGridViewtab1()
         {
             var _rolContactoCtrl = new RolContactoController(new ConstSoft_agendaContext());
             try
@@ -57,9 +69,9 @@ namespace Proyecto_CS_Agenda.Views
                 }
 
                 // Crear un nuevo objeto RolSistema con los valores obtenidos
-                RolContacto nuevoRol = new RolContacto { Nombre = nombreRol, Descripcion= descripcionRol, Estado = estadoRol };
+                RolContacto nuevoRol = new RolContacto { Nombre = nombreRol, Descripcion = descripcionRol, Estado = estadoRol };
                 _rolContactoCtrl.AgregarRolContacto(nuevoRol);
-                CargarDatosDataGridView();
+                CargarDatosDataGridViewtab1();
 
                 MessageBox.Show("Rol agregado exitosamente.");
             }
@@ -78,7 +90,7 @@ namespace Proyecto_CS_Agenda.Views
                 int idToDelete = Convert.ToInt32(dgvListSystemRol.SelectedRows[0].Cells["Id"].Value);
 
                 _rolContactoCtrl.EliminarRolContacto(idToDelete);
-                CargarDatosDataGridView();
+                CargarDatosDataGridViewtab1();
             }
             else
             {
@@ -89,14 +101,14 @@ namespace Proyecto_CS_Agenda.Views
         private void AbrirVentanaEdicion(RolContacto rol)
         {
 
-           EditRolContactoView formEdicion = new EditRolContactoView(rol);
-           DialogResult result = formEdicion.ShowDialog();
+            EditRolContactoView formEdicion = new EditRolContactoView(rol);
+            DialogResult result = formEdicion.ShowDialog();
 
 
-           if (result == DialogResult.OK)
-           {
-                CargarDatosDataGridView();
-           }
+            if (result == DialogResult.OK)
+            {
+                CargarDatosDataGridViewtab1();
+            }
         }
 
         private void btnEditRol_Click(object sender, EventArgs e)
@@ -116,6 +128,148 @@ namespace Proyecto_CS_Agenda.Views
             else
             {
                 MessageBox.Show("Por favor, selecciona un rol antes de hacer clic en 'Editar'.");
+            }
+        }
+
+
+
+
+
+        //tabGestionEmpleados(usuarios no administradores con acceso al sistema)
+        public void cargarDatosDGVtab2()
+        {
+            var _rolUsersCtrl = new UsuarioController(new ConstSoft_agendaContext());
+            try
+            {
+                var Uroles = _rolUsersCtrl.ObtenerTodosUsuarios();
+
+                dgvSystemUsers.DataSource = Uroles;
+
+                // Ocultar la columna de usuarios Contact, SystemRolNavigation, Agenda
+                if (dgvSystemUsers.Columns.Contains("Contact") &&
+                    dgvSystemUsers.Columns.Contains("SystemRolNavigation") &&
+                    dgvSystemUsers.Columns.Contains("Agenda"))
+                {
+                    dgvSystemUsers.Columns["Contact"].Visible = false;
+                    dgvSystemUsers.Columns["SystemRolNavigation"].Visible = false;
+                    dgvSystemUsers.Columns["Agenda"].Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos al GridView: {ex.Message}");
+            }
+        }
+
+
+        public void cargarRolesCotacto()
+        {
+            var _RolesContacto = new RolContactoController(new ConstSoft_agendaContext());
+            try
+            {
+                var cbRoles = _RolesContacto.ObtenerTodosRolesContacto();
+                cbRolContacto.DataSource = cbRoles.Select(rol => rol.Nombre).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar los Roles: {ex.Message}");
+            }
+        }
+
+
+        public Contacto CrearContactoParaVincular() 
+        {
+            var _rolContacto = new RolContactoController(new ConstSoft_agendaContext());
+            var _ContactCtrl = new ContactoController(new ConstSoft_agendaContext());
+
+            string rolContact = cbRolContacto.SelectedItem?.ToString().Trim();
+
+            try
+            {
+                if (string.IsNullOrEmpty(rolContact))
+                {
+                    MessageBox.Show("Selecciona un rol de contacto válido.");
+                    return null;
+                }
+
+                var handRol = _rolContacto.ObtenerRolContactporName(rolContact);
+
+                if (handRol != null)
+                {
+                    string NombreContacto = _txtNombres.Text + " " + _txtApellidos.Text;
+                    Contacto _contacto = new Contacto
+                    {
+                        NombreContact = NombreContacto,
+                        Mail = "****",
+                        Telf1 = "***",
+                        Telf2 = "***",
+                        Direccion = "***",
+                        RolId = handRol.Id
+                    };
+                    _ContactCtrl.AgregarContacto(_contacto);
+                    MessageBox.Show($"Creado {_contacto.Id}, {_contacto.NombreContact}");
+                    return _contacto;
+                }
+                else
+                {
+                    MessageBox.Show("Error: No se encontró el rol de contacto especificado.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error general: {ex.Message}");
+                return null;
+            }
+        }
+
+        private void btnTab2Save_Click(object sender, EventArgs e)
+        {
+
+            var _hashing = new HashingManagerService();
+            var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
+            var _rolContacto = new RolContactoController(new ConstSoft_agendaContext());
+
+            try
+            {
+             
+                int valorSeleccionado = 0;
+                if (rbAdminS.Checked) { valorSeleccionado = 1000; }
+                else if (rbUserS.Checked) { valorSeleccionado = 1001; }
+
+                string cedula = _txtCedula.Text.Trim();
+                string nombres = _txtNombres.Text;
+                string apellidos = _txtApellidos.Text;
+                string username = _txtUsername.Text.Trim();
+                string password = _txtPassword.Text.Trim();
+
+                Contacto _contactohandler = CrearContactoParaVincular();
+
+
+                    // Crear un usuario vinculando el Contacto previamente creado
+                    Usuario nuevoUser = new Usuario
+                    {
+                        Cedula = cedula,
+                        Nombres = nombres,
+                        Apellidos = apellidos,
+                        Username = username,
+                        Password = _hashing.HashPassword(password),
+                        SystemRol = valorSeleccionado,
+                        ContactId = _contactohandler.Id
+                    };
+
+                    _UserCtrl.AgregarUsuario(nuevoUser);
+                    cargarDatosDGVtab2();
+
+                    MessageBox.Show("Empleado Usuario agregado exitosamente.\n" +
+                                    $"Vinculado el contacto {_contactohandler.Id} al usuario: \n" +
+                                    $"{nuevoUser.Nombres} {nuevoUser.Apellidos}");
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al crear al nuevo usuario: {ex.Message}");
             }
         }
 
