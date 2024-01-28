@@ -55,7 +55,7 @@ namespace Proyecto_CS_Agenda.Controllers
         {
             try
             {
-                var contactoAEliminar = _context.Contactos.Find(id);
+                Contacto contactoAEliminar = _context.Contactos.Find(id);
 
                 if (contactoAEliminar != null)
                 {

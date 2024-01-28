@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
 using Proyecto_CS_Agenda.Models;
 
 namespace Proyecto_CS_Agenda.Controllers
@@ -71,6 +72,29 @@ namespace Proyecto_CS_Agenda.Controllers
                 Console.WriteLine($"Error al eliminar la agenda: {ex.Message}");
             }
         }
+
+
+
+        // Eliminar una agenda por UserID
+        public void EliminarAgendaByUserID(int userid)
+        {
+            try
+            {
+                var agendaAEliminar = _context.Agenda
+                    .FirstOrDefault(a => a.UserId == userid);
+
+                if (agendaAEliminar != null)
+                {
+                    _context.Agenda.Remove(agendaAEliminar);
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al eliminar la agenda: {ex.Message}");
+            }
+        }
+
 
         // Editar una agenda por ID
         public void EditarAgenda(int id, Agendum agendaEditada)

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Guna.UI2.WinForms;
+using Microsoft.EntityFrameworkCore;
 using Proyecto_CS_Agenda.Controllers;
 using Proyecto_CS_Agenda.Models;
 using Proyecto_CS_Agenda.Services;
@@ -24,7 +25,7 @@ namespace Proyecto_CS_Agenda.Views
             InitializeComponent();
             _us = us;
 
-            lbUserId.Text = _us.Id.ToString();
+            lbUserId.Text = "Usuario: "+_us.Id.ToString();
 
             cargarRolesCotacto();
             cargarRolesSystem();
@@ -38,7 +39,7 @@ namespace Proyecto_CS_Agenda.Views
             verificarRolContacto();
             verificarRolSystem();
 
-            _txtUsername.Text = _us.Username;
+            _txtUsername.Text = _us.Username.Trim();
         }
 
 
@@ -117,6 +118,8 @@ namespace Proyecto_CS_Agenda.Views
             {
                 MessageBox.Show("Contraseña Correcta");
                 PssVerified = true;
+                btnValidatePs.FillColor = Color.Green;
+                btnValidatePs.Text = "Verificado";
             }
 
             else
@@ -129,7 +132,7 @@ namespace Proyecto_CS_Agenda.Views
 
 
 
-        //Guardar Rol Systema
+        //asignar el rol del cb a la entidad
         private int setRolSytem()
         {
             var _RolSys = new RolSistemaController(new ConstSoft_agendaContext());
@@ -140,6 +143,7 @@ namespace Proyecto_CS_Agenda.Views
             return IdToSet;
         }
 
+        //asignar el rol del cb a la entidad
         private void setRolContat()
         {
             var _RolContactCtrl = new RolContactoController(new ConstSoft_agendaContext());
@@ -157,9 +161,11 @@ namespace Proyecto_CS_Agenda.Views
         }
 
 
+        //Guardar campos de informacion legal y roles
         private void guna2Button1_Click(object sender, EventArgs e)
         {
             var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
+            setRolContat();
 
             String _Ci = _txtCedula.Text;
             String _Nombres = _txtNames.Text;
@@ -192,34 +198,60 @@ namespace Proyecto_CS_Agenda.Views
 
             if (PssVerified == true)
             {
-                _us.Username = _txtUsername.Text.Trim();
+              
+                // Solo se edita password, Verificar si se ingresó una nueva contraseña y si las contraseñas coinciden
+                if (_PsNew.Text != "" && _PsNewConfirm.Text != "" &&
+                    _PsNew.Text == _PsNewConfirm.Text &&
+                    _txtUsername.Text.Trim() == _us.Username.Trim())
+                {
+                    string stringPss = _PsNewConfirm.Text;
+                    string HSstring = HashingService.HashPassword(stringPss);
+                    _us.Password = HSstring;
+                    _UserCtrl.EditarUsuario((int)_us.Id, _us);
 
-                // Verificar si se ingresó una nueva contraseña y si las contraseñas coinciden
-                if (_PsNew != null && _PsNewConfirm != null &&
-                    !string.IsNullOrEmpty(_PsNew.Text.Trim()) &&
+                    PssVerified = false;
+                    btnValidatePs.FillColor = Color.Gray;
+
+                    MessageBox.Show("SE HA EDITADO LA CONTRASEÑA");
+                }
+
+                //Solo se ha editado el Username, verificar que los campos de nueva contrasena esten nulos
+                else if (_txtUsername.Text != _us.Username && _PsNew.Text.Trim() == "" && _PsNewConfirm.Text.Trim() == "") 
+                {
+                    _us.Username = _txtUsername.Text;
+                    _UserCtrl.EditarUsuario((int)_us.Id, _us);
+
+                    PssVerified = false;
+                    btnValidatePs.FillColor = Color.Gray;
+                    btnValidatePs.Text = "Verificar";
+                    MessageBox.Show("SE HA EDITADO EL USERNAME");
+                }
+
+                //Se editan ambas credenciales, verifica el valor de username es distinto y que los campos de nueva contrasena coinciden
+                else if (_txtUsername.Text != _us.Username &&
+                         _PsNew.Text != null && _PsNewConfirm.Text != null &&
                     _PsNew.Text.Trim() == _PsNewConfirm.Text.Trim())
                 {
-                    // Hashear y actualizar la nueva contraseña
-                    _us.Password = HashingService.HashPassword(_PsNewConfirm.Text);
-                }
-
-                // Editar el usuario solo si se ha cambiado la contraseña o el nombre de usuario
-                if (!string.IsNullOrEmpty(_PsNew.Text.Trim()) || _us.Username != _txtUsername.Text.Trim())
-                {
+                    _us.Username = _txtUsername.Text;
+                    string stringPss = _PsNewConfirm.Text;
+                    string HSstring = HashingService.HashPassword(stringPss);
+                    _us.Password = HSstring;
                     _UserCtrl.EditarUsuario((int)_us.Id, _us);
-                    MessageBox.Show("SE HAN EDITADO LAS CREDENCIALES");
-                }
-                else
-                {
-                    MessageBox.Show("No se realizaron cambios en las credenciales.");
+
+                    PssVerified = false;
+                    btnValidatePs.FillColor = Color.Gray;
+                    btnValidatePs.Text = "Verificar";
+                    MessageBox.Show("SE HAN EDITADO AMBAS CREDENCIALES");
+
                 }
             }
             else
             {
-                MessageBox.Show("No ha verificado la contraseña.");
+                MessageBox.Show("Verificar contraseña antes de realizar cualquier cambio.");
             }
         }
 
+        //boton cancelar cambio en credenciales
         private void guna2Button5_Click(object sender, EventArgs e)
         {
             _txtUsername.Text = _us.Username.Trim();

@@ -16,9 +16,11 @@ namespace Proyecto_CS_Agenda.Views
 {
     public partial class AdminView : Form
     {
-        public AdminView()
+        Usuario LogedUser;
+        public AdminView(Usuario _GetUser)
         {
             InitializeComponent();
+            LogedUser = _GetUser;
 
             //tabGestionRol
             CargarDatosDataGridViewtab1();
@@ -27,6 +29,9 @@ namespace Proyecto_CS_Agenda.Views
             cargarDatosDGVtab2();
             cargarRolesCotacto();
 
+
+            //tabAdminInfo (informacion de contacto que pertenece al administrador logeado)
+            cargarUserContactInfo();
         }
 
 
@@ -228,6 +233,7 @@ namespace Proyecto_CS_Agenda.Views
             var _hashing = new HashingManagerService();
             var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
             var _rolContacto = new RolContactoController(new ConstSoft_agendaContext());
+            var _agenda = new AgendumController(new ConstSoft_agendaContext());
 
             try
             {
@@ -258,10 +264,13 @@ namespace Proyecto_CS_Agenda.Views
                 };
 
                 _UserCtrl.AgregarUsuario(nuevoUser);
+                _agenda.AgregarAgenda(new Agendum { UserId = nuevoUser.Id });
+
                 cargarDatosDGVtab2();
 
-                MessageBox.Show("Empleado Usuario agregado exitosamente.\n" +
-                                $"Vinculado el contacto {_contactohandler.Id} al usuario: \n" +
+                MessageBox.Show("Empleado Usuario agregado exitosamente.\n \n" +
+                                $"Se ha vinculado el contacto {_contactohandler.Id}, {_contactohandler.NombreContact} " +
+                                $"al usuario: \n" +
                                 $"{nuevoUser.Nombres} {nuevoUser.Apellidos}");
 
 
@@ -303,18 +312,32 @@ namespace Proyecto_CS_Agenda.Views
         private void btnTab2Delete_Click(object sender, EventArgs e)
         {
             var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
+            var _ContactCtrl = new ContactoController(new ConstSoft_agendaContext());
+            var _agenda = new AgendumController(new ConstSoft_agendaContext());
             if (dgvSystemUsers.SelectedRows.Count > 0)
             {
                 // Obtener el valor de la celda correspondiente al Id 
-                int idToDelete = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["Id"].Value);
+                int idUserToDelete = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["Id"].Value);
+                int idContactToDelete = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["ContactId"].Value);
 
-                _UserCtrl.EliminarUsuario(idToDelete);
+                MessageBox.Show($"{idContactToDelete}");
+
+
+                _UserCtrl.EliminarUsuario(idUserToDelete);
+                _agenda.EliminarAgendaByUserID(idUserToDelete);
+                _ContactCtrl.EliminarContacto(idContactToDelete);
+
+
                 cargarDatosDGVtab2();
             }
+
             else
             {
+                cargarDatosDGVtab2();
                 MessageBox.Show("Por favor, selecciona un usuario antes de hacer clic en 'Eliminar'.");
             }
+
+            cargarDatosDGVtab2();
         }
 
         private void AbrirVentanaEditUsuario(Usuario us)
@@ -336,7 +359,7 @@ namespace Proyecto_CS_Agenda.Views
         {
             var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
 
-            
+
             if (dgvSystemUsers.SelectedRows.Count > 0)
             {
                 int IdSelected = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["Id"].Value);
@@ -353,5 +376,98 @@ namespace Proyecto_CS_Agenda.Views
                 MessageBox.Show("Por favor, selecciona un rol antes de hacer clic en 'Editar'.");
             }
         }
+
+        private void btnSearchInUseres_Click(object sender, EventArgs e)
+        {
+            string searchText = _txtSearch.Text.Trim();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                MessageBox.Show("Por favor, ingresa un valor para realizar la búsqueda.");
+                return;
+            }
+
+            var userService = new UsuarioController(new ConstSoft_agendaContext());
+
+            if (int.TryParse(searchText, out int ci))
+            {
+                // Si el texto es un número, realizar búsqueda por CI
+
+                Usuario usuario = userService.ObtenerUsuarioByCI(searchText);
+
+                MostrarBusqueda(usuario);
+            }
+            else
+            {
+                // Si el texto no es un número, realizar búsqueda por Username
+                Usuario usuario = userService.ObtenerUsuarioporUsername(searchText);
+
+                MostrarBusqueda(usuario);
+            }
+        }
+
+
+        private void MostrarBusqueda(Usuario user)
+        {
+            if (user == null)
+            {
+                MessageBox.Show("No se encontraron resultados para la búsqueda.");
+                cargarDatosDGVtab2();
+            }
+            else
+            {
+                dgvSystemUsers.DataSource = new List<Usuario> { user };
+            }
+        }
+
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            cargarDatosDGVtab2();
+        }
+
+
+        //ADMIN INFO TAB**********************************************************************************************************
+
+        private void cargarUserContactInfo()
+        {
+
+
+            var ContactCtrl = new ContactoController(new ConstSoft_agendaContext());
+
+            Contacto UserContact = ContactCtrl.ObtenerContactoPorId((int)LogedUser.ContactId);
+
+
+            txtUsName.Text = UserContact.NombreContact;
+            txtUsMail.Text = UserContact.Mail.Trim();
+            txtUsTelf1.Text = UserContact.Telf1.Trim();
+            txtUsTelf2.Text = UserContact.Telf2.Trim();
+            txtUsAddress.Text = UserContact.Direccion;
+        }
+
+        private void btnUsContSave_Click(object sender, EventArgs e)
+        {
+            var ContactCtrl = new ContactoController(new ConstSoft_agendaContext());
+            Contacto UserContact = ContactCtrl.ObtenerContactoPorId((int)LogedUser.ContactId);
+
+            UserContact.NombreContact = txtUsName.Text.Trim();
+            UserContact.Mail = txtUsMail.Text.Trim();
+            UserContact.Telf1 = txtUsTelf1.Text.Trim();
+            UserContact.Telf2 = txtUsTelf2.Text.Trim();
+            UserContact.Direccion = txtUsAddress.Text.Trim();
+
+            ContactCtrl.EditarContacto((int)LogedUser.ContactId, UserContact);
+
+            MessageBox.Show("Informacion guardada");
+
+        }
+
+        private void guna2Button2_Click(object sender, EventArgs e)
+        {
+            cargarUserContactInfo();
+        }
+
+
     }
+
 }

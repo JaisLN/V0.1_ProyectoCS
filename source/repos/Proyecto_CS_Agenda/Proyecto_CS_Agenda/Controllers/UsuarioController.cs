@@ -89,10 +89,16 @@ namespace Proyecto_CS_Agenda.Controllers
             }
         }
 
-
+        //obtener por Username
         public Usuario ObtenerUsuarioporUsername(string username)
         {
             return _context.Usuarios.FirstOrDefault(u => u.Username == username);
+        }
+
+        //obtener por Cedula
+        public Usuario ObtenerUsuarioByCI(string Ci)
+        {
+            return _context.Usuarios.FirstOrDefault(u => u.Cedula == Ci);
         }
     }
 }
