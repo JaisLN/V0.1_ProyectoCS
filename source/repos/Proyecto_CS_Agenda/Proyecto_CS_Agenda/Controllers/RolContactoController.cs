@@ -112,5 +112,40 @@ namespace Proyecto_CS_Agenda.Controllers
         {
             return _context.RolContactos.FirstOrDefault(u => u.Nombre == name);
         }
+
+
+        //determinar el estado de un rol
+        public string ObtenerEstadoRol(int idRol)
+        {
+            try
+            {
+                var rol = _context.RolContactos.Find(idRol);
+
+                if (rol != null)
+                {
+                    // Verificar el estado del rol
+                    if (string.Equals(rol.Estado.Trim(), "Activo", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return "Activo";
+                    }
+                    else if (string.Equals(rol.Estado.Trim(), "Inactivo", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return "Inactivo";
+                    }
+                }
+
+                // Si el rol no existe o el estado no coincide con "Activo" o "Inactivo"
+                return "Estado no definido";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener el estado del rol: {ex.Message}");
+                return "Error";
+            }
+
+        }
+
+
+
     }
 }

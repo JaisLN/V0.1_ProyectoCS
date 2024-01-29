@@ -335,7 +335,7 @@
             tPageGestionEmpleados.Location = new Point(184, 4);
             tPageGestionEmpleados.Name = "tPageGestionEmpleados";
             tPageGestionEmpleados.Padding = new Padding(3);
-            tPageGestionEmpleados.Size = new Size(997, 728);
+            tPageGestionEmpleados.Size = new Size(997, 732);
             tPageGestionEmpleados.TabIndex = 1;
             tPageGestionEmpleados.Text = "Gestion de Empleados";
             tPageGestionEmpleados.UseVisualStyleBackColor = true;
@@ -647,7 +647,7 @@
             tabAdminContactInfo.Location = new Point(184, 4);
             tabAdminContactInfo.Name = "tabAdminContactInfo";
             tabAdminContactInfo.Padding = new Padding(3);
-            tabAdminContactInfo.Size = new Size(997, 728);
+            tabAdminContactInfo.Size = new Size(997, 732);
             tabAdminContactInfo.TabIndex = 2;
             tabAdminContactInfo.Text = "Informacion Admin";
             tabAdminContactInfo.UseVisualStyleBackColor = true;

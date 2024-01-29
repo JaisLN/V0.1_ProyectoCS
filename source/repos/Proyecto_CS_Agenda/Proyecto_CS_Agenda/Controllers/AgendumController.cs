@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.ApplicationServices;
 using Proyecto_CS_Agenda.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Proyecto_CS_Agenda.Controllers
 {
@@ -36,6 +37,20 @@ namespace Proyecto_CS_Agenda.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al obtener la agenda por ID: {ex.Message}");
+                return null;
+            }
+        }
+
+        // Obtener una agenda por Usuario ID
+        public Agendum ObtenerAgendaPorUserId(int uId)
+        {
+            try
+            {
+                return _context.Agenda.FirstOrDefault(u => u.UserId == uId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener la agenda por Usuario ID: {ex.Message}");
                 return null;
             }
         }

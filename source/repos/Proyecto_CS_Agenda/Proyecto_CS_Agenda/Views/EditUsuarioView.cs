@@ -132,8 +132,12 @@ namespace Proyecto_CS_Agenda.Views
 
 
 
+
+        //Prohibido cambiar el rol de sistema Conflicto no resuelto entre las agendas,
+        //el cambio implica la creacion de 2 agendas vinculadas a un mismo usuario lo que interviene en eventos como
+        //ObtenerAgendaPorUsuarioID
         //asignar el rol del cb a la entidad
-        private int setRolSytem()
+        /*private int setRolSytem()
         {
             var _RolSys = new RolSistemaController(new ConstSoft_agendaContext());
             string RolSysValue = _cbSystemRol.SelectedItem?.ToString().Trim();
@@ -141,7 +145,8 @@ namespace Proyecto_CS_Agenda.Views
 
             int IdToSet = FindRS.Id;
             return IdToSet;
-        }
+        }*/
+
 
         //asignar el rol del cb a la entidad
         private void setRolContat()
@@ -176,9 +181,44 @@ namespace Proyecto_CS_Agenda.Views
             _us.Cedula = _Ci;
             _us.Nombres = _Nombres;
             _us.Apellidos = _Apellidos;
-            _us.SystemRol = setRolSytem();
+
+            //Prohibido cambiar el rol de sistema Conflicto no resuelto entre las agendas,
+            //el cambio implica la creacion de 2 agendas vinculadas a un mismo usuario lo que interviene en eventos como
+            //ObtenerAgendaPorUsuarioID
+            //_us.SystemRol = setRolSytem();
+
 
             _UserCtrl.EditarUsuario(_us.Id, _us);
+
+            /*
+            //Prohibido cambiar el rol de sistema Conflicto no resuelto entre las agendas,
+            //el cambio implica la creacion de 2 agendas vinculadas a un mismo usuario lo que interviene en eventos como
+            //ObtenerAgendaPorUsuarioID
+
+            //Creacion de agenda en Caso de que el Usuario tenga SystemRol Usuario
+            if (_us.SystemRol == 1001)
+            {
+                
+                var _agenda = new AgendumController(new ConstSoft_agendaContext());
+                _UserCtrl.AgregarUsuario(_us);
+                _agenda.AgregarAgenda(new Agendum { UserId = _us.Id });
+
+
+
+                ///asignar los contactos golbales (de Rol Contacto 'Activo') a la agenda del usuario
+
+                //obtener la agenda
+                Agendum AgHandler = _agenda.ObtenerAgendaPorUserId(_us.Id);
+
+                //obtener los contactos globales
+                var contactoCtrl = new ContactoController(new ConstSoft_agendaContext());
+                var contactosActivos = contactoCtrl.ObtenerContactosVinculadosARolActivo();
+
+                //vincular agenda y contactos
+                var agendaContactoCtrl = new AgendaContactoController(new ConstSoft_agendaContext());
+                agendaContactoCtrl.VincularContactosAAgenda(AgHandler.Id, contactosActivos);
+            }*/
+
             DialogResult = DialogResult.OK;
             Close();
         }

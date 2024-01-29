@@ -1,4 +1,5 @@
-﻿using Proyecto_CS_Agenda.Controllers;
+﻿using Microsoft.EntityFrameworkCore;
+using Proyecto_CS_Agenda.Controllers;
 using Proyecto_CS_Agenda.Models;
 using Proyecto_CS_Agenda.Services;
 using System;
@@ -65,7 +66,7 @@ namespace Proyecto_CS_Agenda.Views
             {
                 string nombreRol = txtbContactRolName.Text.Trim();
                 string descripcionRol = txtbContactRolDesc.Text;
-                string estadoRol = cbContactRolState.SelectedItem?.ToString();
+                string estadoRol = cbContactRolState.SelectedItem?.ToString().Trim();
 
                 if (string.IsNullOrEmpty(estadoRol))
                 {
@@ -143,12 +144,12 @@ namespace Proyecto_CS_Agenda.Views
         //tabGestionEmpleados(usuarios no administradores con acceso al sistema)*************************************************************
         public void cargarDatosDGVtab2()
         {
-            var _rolUsersCtrl = new UsuarioController(new ConstSoft_agendaContext());
+            var _UsersCtrl = new UsuarioController(new ConstSoft_agendaContext());
             try
             {
-                var Uroles = _rolUsersCtrl.ObtenerTodosUsuarios();
+                var Us = _UsersCtrl.ObtenerTodosUsuarios();
 
-                dgvSystemUsers.DataSource = Uroles;
+                dgvSystemUsers.DataSource = Us;
 
                 // Ocultar la columna de usuarios Contact, SystemRolNavigation, Agenda
                 if (dgvSystemUsers.Columns.Contains("Contact") &&
@@ -211,7 +212,7 @@ namespace Proyecto_CS_Agenda.Views
                         RolId = handRol.Id
                     };
                     _ContactCtrl.AgregarContacto(_contacto);
-                    MessageBox.Show($"Creado {_contacto.Id}, {_contacto.NombreContact}");
+                    MessageBox.Show($"Creado contacto {_contacto.Id}, {_contacto.NombreContact}");
                     return _contacto;
                 }
                 else
@@ -227,6 +228,8 @@ namespace Proyecto_CS_Agenda.Views
             }
         }
 
+
+        //guardar el nuevo usuario
         private void btnTab2Save_Click(object sender, EventArgs e)
         {
 
@@ -263,22 +266,47 @@ namespace Proyecto_CS_Agenda.Views
                     ContactId = _contactohandler.Id
                 };
 
-                _UserCtrl.AgregarUsuario(nuevoUser);
-                _agenda.AgregarAgenda(new Agendum { UserId = nuevoUser.Id });
+                //agenda vinculada al usuario en caso de tener Sysrol Usuario
+                if(nuevoUser.SystemRol == 1001)
+                {
+                    _UserCtrl.AgregarUsuario(nuevoUser);
+                    _agenda.AgregarAgenda(new Agendum { UserId = nuevoUser.Id });
+                    MessageBox.Show("Empleado Usuario agregado exitosamente.\n \n" +
+                                    $"Se ha vinculado el contacto {_contactohandler.Id}, {_contactohandler.NombreContact} " +
+                                    $"al usuario: \n" +
+                                    $"{nuevoUser.Id} {nuevoUser.Nombres} {nuevoUser.Apellidos}");
 
-                cargarDatosDGVtab2();
-
-                MessageBox.Show("Empleado Usuario agregado exitosamente.\n \n" +
-                                $"Se ha vinculado el contacto {_contactohandler.Id}, {_contactohandler.NombreContact} " +
-                                $"al usuario: \n" +
-                                $"{nuevoUser.Nombres} {nuevoUser.Apellidos}");
 
 
+
+                    ///asignar los contactos golbales (de Rol Contacto 'Activo') a la agenda del usuario
+             
+                    //obtener la agenda
+                    Agendum AgHandler = _agenda.ObtenerAgendaPorUserId(nuevoUser.Id);
+
+                    //obtener los contactos globales
+                    var contactoCtrl = new ContactoController(new ConstSoft_agendaContext());
+                    var contactosActivos = contactoCtrl.ObtenerContactosVinculadosARolActivo();
+
+                    //vincular agenda y contactos globales
+                    var agendaContactoCtrl = new AgendaContactoController(new ConstSoft_agendaContext());
+                    agendaContactoCtrl.VincularContactosAAgenda(AgHandler.Id, contactosActivos);
+                }
+
+                else if (nuevoUser.SystemRol == 1000)
+                {
+                    _UserCtrl.AgregarUsuario(nuevoUser);
+                    MessageBox.Show("Empleado Amind agregado exitosamente. \n \n" +
+                                    $"{nuevoUser.Id}, {nuevoUser.Username}");
+
+                }
+ 
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al crear al nuevo usuario: {ex.Message}");
             }
+            cargarDatosDGVtab2();
         }
 
 
@@ -314,29 +342,54 @@ namespace Proyecto_CS_Agenda.Views
             var _UserCtrl = new UsuarioController(new ConstSoft_agendaContext());
             var _ContactCtrl = new ContactoController(new ConstSoft_agendaContext());
             var _agenda = new AgendumController(new ConstSoft_agendaContext());
+
             if (dgvSystemUsers.SelectedRows.Count > 0)
             {
                 // Obtener el valor de la celda correspondiente al Id 
                 int idUserToDelete = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["Id"].Value);
                 int idContactToDelete = Convert.ToInt32(dgvSystemUsers.SelectedRows[0].Cells["ContactId"].Value);
 
-                MessageBox.Show($"{idContactToDelete}");
+ 
+                
 
 
-                _UserCtrl.EliminarUsuario(idUserToDelete);
-                _agenda.EliminarAgendaByUserID(idUserToDelete);
-                _ContactCtrl.EliminarContacto(idContactToDelete);
+                //Eliminar agenda en caso de que el Usuario tenga SystemRol Usuario
+                Agendum ag = _agenda.ObtenerAgendaPorUserId(idUserToDelete);
+                if (ag != null) 
+                {
+                    var agCtoCtrl = new AgendaContactoController(new ConstSoft_agendaContext());
+                    Agendum agToDelete = _agenda.ObtenerAgendaPorUserId(idUserToDelete);
+
+                    //eliminar contactos vinculados a agenda del usuario
+                    agCtoCtrl.EliminarContactoAgendumPorAgendaId(agToDelete.Id);
+
+                    //eliminar el contacto del Usuario de otras agendas
+                    agCtoCtrl.EliminarContactoAgendumPorContactoID(idContactToDelete);
+
+                    //eliminar agenda del usuario
+                    _agenda.EliminarAgendaByUserID(idUserToDelete);
+
+                    //Eliminar usuario
+                    _UserCtrl.EliminarUsuario(idUserToDelete);
+
+                    //eliminar el contacto del usuario
+                    _ContactCtrl.EliminarContacto(idContactToDelete);
+                }
 
 
-                cargarDatosDGVtab2();
+                else if(ag == null)
+                {
+                    _ContactCtrl.EliminarContacto(idContactToDelete);
+                    _UserCtrl.EliminarUsuario(idUserToDelete);
+                }
+
+
             }
 
             else
             {
-                cargarDatosDGVtab2();
                 MessageBox.Show("Por favor, selecciona un usuario antes de hacer clic en 'Eliminar'.");
             }
-
             cargarDatosDGVtab2();
         }
 
@@ -437,7 +490,7 @@ namespace Proyecto_CS_Agenda.Views
 
             Contacto UserContact = ContactCtrl.ObtenerContactoPorId((int)LogedUser.ContactId);
 
-
+            lbLogedAdmin.Text = "Usuario Administrador ID: " + LogedUser.Id;
             txtUsName.Text = UserContact.NombreContact;
             txtUsMail.Text = UserContact.Mail.Trim();
             txtUsTelf1.Text = UserContact.Telf1.Trim();

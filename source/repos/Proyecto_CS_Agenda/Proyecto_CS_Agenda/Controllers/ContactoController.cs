@@ -87,6 +87,42 @@ namespace Proyecto_CS_Agenda.Controllers
                 Console.WriteLine($"Error al editar el contacto: {ex.Message}");
             }
         }
+
+        //Obtener Contactos Vinculados a un Rol de e estado Activo
+        public List<Contacto> ObtenerContactosVinculadosARolActivo()
+        {
+            try
+            {
+                var contactosVinculados = new List<Contacto>();
+
+                // Obtener todos los contactos
+                var contactos = _context.Contactos.ToList();
+                var RolContactoCtrl = new RolContactoController(new ConstSoft_agendaContext());
+                // Recorrer cada contacto
+                foreach (var contacto in contactos)
+                {
+                    // Verificar si el contacto está vinculado a un rol activo
+                    if (contacto.RolId != null)
+                    {
+                        int idRol = (int)contacto.RolId;
+                        string estadoRol = RolContactoCtrl.ObtenerEstadoRol(idRol);
+
+                        if (string.Equals(estadoRol, "Activo", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Agregar el contacto a la lista
+                            contactosVinculados.Add(contacto);
+                        }
+                    }
+                }
+
+                return contactosVinculados;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener contactos vinculados a roles activos: {ex.Message}");
+                return new List<Contacto>();
+            }
+        }
     }
 }
 

@@ -53,12 +53,15 @@ namespace Proyecto_CS_Agenda.Views
                         else if (validateRolSys == 1001)
                         {
                             MessageBox.Show($"Bienvenido, {validate.Nombres.Trim()} {validate.Apellidos.Trim()}");
+                            UsuarioView form = new UsuarioView(validate);
+                            this.Hide();
+                            form.Show();
                         }
 
 
                         else
                         {
-                            MessageBox.Show($"Valor inesperado de validateRolSys: {validateRolSys}");
+                            MessageBox.Show($"Valor inesperado de validateRolSys: {validateRolSys} nom implemetacion de vistas para Rol");
                         }
                     }
                     else
